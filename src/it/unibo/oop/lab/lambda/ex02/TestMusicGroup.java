@@ -123,5 +123,4 @@ public final class TestMusicGroup {
         assertEquals("When the Levee Breaks", lz.longestSong().get());
         assertEquals(UNTITLED, lz.longestAlbum().get());
     }
-
 }
