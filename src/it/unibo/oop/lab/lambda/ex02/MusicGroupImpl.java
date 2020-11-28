@@ -77,7 +77,7 @@ public final class MusicGroupImpl implements MusicGroup {
     public OptionalDouble averageDurationOfSongs(final String albumName) {
         return this.songs.stream()
                          .filter(s -> s.albumName.equals(Optional.ofNullable(albumName)))
-                         .mapToDouble(s -> s.getDuration())
+                         .mapToDouble(Song::getDuration)
                          .average();
     }
 
@@ -100,7 +100,7 @@ public final class MusicGroupImpl implements MusicGroup {
     private Double comparatorAddend(final String addend) {
         return this.songs.stream()
                   .filter(s -> s.getAlbumName().equals(Optional.ofNullable(addend)))
-                  .map(s -> s.getDuration())
+                  .map(Song::getDuration)
                   .reduce(0.0, Double::sum);
     }
 
