@@ -61,7 +61,9 @@ public final class LambdaUtilities {
         /*
          * Suggestion: consider Optional.filter
          */
-        return null;
+        List<Optional<T>> optList = new ArrayList<>();
+        list.forEach(l -> optList.add(Optional.of(l).filter(pre)));
+        return optList;
     }
 
     /**
@@ -80,6 +82,8 @@ public final class LambdaUtilities {
         /*
          * Suggestion: consider Map.merge
          */
+        Map<R, Set<T>> map = new HashMap<>();
+        list.forEach(l -> map.merge(op, l, op));
         return null;
     }
 
