@@ -1,5 +1,7 @@
 package it.unibo.oop.lab.lambda.ex03;
 
+import static org.junit.jupiter.api.DynamicTest.stream;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -7,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.Toolkit;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -14,6 +17,9 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+
+
+import java.util.List;
 
 /**
  * Modify this small program adding new filters.
@@ -35,14 +41,26 @@ public final class LambdaFilter extends JFrame {
     private static final long serialVersionUID = 1760990730218643730L;
 
     private enum Command {
-        IDENTITY("No modifications", Function.identity());
+        IDENTITY("No modifications", Function.identity()),
+        LOWERCASE("Convert to lower case", String::toLowerCase),
+        COUNT_CHARS("Count the number of chars", s -> String.valueOf(s.chars()
+                                                                      .count())),
+        COUNT_LINES("Count the number of lines", s -> String.valueOf(s.chars()
+                                                                      .filter(c -> Character.toString(c).equals("\n"))
+                                                                      .count())),
+        LIST_ALPHA("List all the words in alphabetical order", s -> List.of(s.split("\\s"))
+                                                                        .stream()
+                                                                        .sorted()
+                                                                        .map(String::toString)
+                                                                        .collect(Collectors.joining("\n", "", ""))
+                                                                        .toString());
 
-        private final String commandName;
+        private final String commandName; 
         private final Function<String, String> fun;
 
         Command(final String name, final Function<String, String> process) {
             commandName = name;
-            fun = process;
+            fun = process; 
         }
 
         @Override
